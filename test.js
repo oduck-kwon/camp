@@ -1,4 +1,4 @@
-window.onload= function() {
+function duck() {
 document.getElementById("tocken").value = 'test';
 }
 
