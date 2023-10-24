@@ -1,2 +1,2 @@
 
-alert('test');
+document.getElementById("tocken").value = 'test';
