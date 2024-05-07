@@ -12,6 +12,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <script type="text/javascript">
+function left(s,c){
+  return s.substr(0,c);
+}//left("abcd",2)
+function right(s,c){
+  return s.substr(-c);
+}//right("abcd",2)
+function mid(s,c,l){
+  return s.substring(c,l);
+}//mid("abcd",1,2)
+function copy(s,c,l){
+  return s.substr(c,l);
+}//copy("abcd",1,2)
+	
 function init() {
 	var nYear = new Date().getFullYear();
 	
