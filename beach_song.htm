@@ -1,24 +1,138 @@
-<!DOCTYPE HTML>
-<html>
-<head>
+<!doctype html>
+<HTML lang=en>
+<HEAD>
+<TITLE> 송지호 가자 </TITLE>
+<META charset="utf-8">
+<META NAME="Generator" CONTENT="EditPlus">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 <script type="text/javascript">
-function test12() {
-  document.test.action = "https://gwgs.pubcamping.kr/@song/reservation";
-  document.test.submit();
+function init() {
+  var nYear = new Date().getFullYear();
+
+	for(var i = nYear; i <= (nYear+1); i++) {
+		var sOption = document.createElement('option');
+		sOption.innerText = i +"년";
+		sOption.value = i;
+		var eOption = document.createElement('option');
+		eOption.innerText = i +"년";
+		eOption.value = i;
+
+		document.getElementById("sYear").appendChild(sOption);
+		document.getElementById("eYear").appendChild(eOption);
+	}
+	//월 추가
+	for(var i = 1; i <= 12; i++) {
+		var sOption = document.createElement('option');
+		sOption.innerText = right("0"+i, 2) + "월";
+		sOption.value = right("0"+i, 2);
+		var eOption = document.createElement('option');
+		eOption.innerText = right("0"+i, 2) + "월";
+		eOption.value = right("0"+i, 2);
+
+		document.getElementById("sMonth").appendChild(sOption);
+		document.getElementById("eMonth").appendChild(eOption);
+	}
+	//일 추가
+	for(var i = 1; i <= 31; i++) {
+		var sOption = document.createElement('option');
+		sOption.innerText = right("0"+i, 2) +"일";
+		sOption.value = right("0"+i, 2);
+		var eOption = document.createElement('option');
+		eOption.innerText = right("0"+i, 2) +"일";
+		eOption.value = right("0"+i, 2);
+
+		document.getElementById("sDay").appendChild(sOption);
+		document.getElementById("eDay").appendChild(eOption);
+	}
+}
+
+function chgRoomArea() {
+
+}
+
+function setRoomNo() {
+
+}
+function reserved() {
+  var reservedForm = document.reserved_song;
+
+	var sYYYY = document.getElementById("sYear").options[document.getElementById("sYear").selectedIndex].value;
+	var sMM = document.getElementById("sMonth").options[document.getElementById("sMonth").selectedIndex].value;
+	var sDD = document.getElementById("sDay").options[document.getElementById("sDay").selectedIndex].value;
+
+	var eYYYY = document.getElementById("eYear").options[document.getElementById("eYear").selectedIndex].value;
+	var eMM = document.getElementById("eMonth").options[document.getElementById("eMonth").selectedIndex].value;
+	var eDD = document.getElementById("eDay").options[document.getElementById("eDay").selectedIndex].value;
+
+  
+  reservedForm.action = "https://gwgs.pubcamping.kr/@song/reservation";
+  reservedForm.submit();
 }
 </script>
-
 </head>
-<body>
-<form name="test" method="post">
-<input type="text" name="room_area_no" value="2" />
-<input type="text" name="stay_cnt" value="1" />
-<input type="text" name="check_in" value="20240420" />
-<input type="text" name="check_out" value="20240421" />
-<input type="text" name="roomNoArr" value="13,14" />
+  
+<body onload="init();">
 
-
+<form name="reserved_song" method="post">
+<table width="500">
+	<tr>
+		<td width="10"></td>
+		<td>
+			<table width="500" border="1">
+				<tr>
+					<td align="center" width="100">예약 시작일</td>
+					<td align="center" width="100">예약 종료일</td>
+          <td align="center" width="100">구역안내</td>
+          <td align="center" width="100">숙박일수</td>
+          <td align="center" width="100">사이트</td>
+				</tr>
+				<tr>
+					<td align="center">
+            <select id="sYear"></select>&nbsp;<select id="sMonth"></select>&nbsp;<select id="sDay"></select>
+            <input type="hidden" name="check_in" value="" />
+          </td>
+					<td align="center">
+            <select id="eYear"></select>&nbsp;<select id="eMonth"></select>&nbsp;<select id="eDay"></select>
+            <input type="hidden" name="check_out" value="" />
+          </td>
+          <td align="center">
+            <select name="room_area_no">
+              <option value="2" selected>통나무집</option>
+            </select>
+          </td>
+          <td align="center">
+            <select name="stay_cnt">
+              <option value="1" selected>1박</option>
+              <option value="2">2박</option>
+              <option value="3">3박</option>
+            </select>
+          </td>
+          <td align="center">
+            <select name="roomNoArr">
+              <option value="1" selected>통나무-01</option>
+              <option value="2">통나무-02</option>
+              <option value="4">통나무-03</option>
+              <option value="5">통나무-04</option>
+              <option value="6">통나무-05</option>
+              <option value="7">통나무-06</option>
+              <option value="8">통나무-07</option>
+              <option value="9">통나무-08</option>
+              <option value="10">통나무-09</option>
+              <option value="369">통나무-10</option>
+            </select>
+          </td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
 </form>
-<input type="button" value="Ŭ��" onClick="test12();" />
+<input type="button" value="Reserved" onClick="reserved();" />
 </body>
 </html>
