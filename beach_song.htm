@@ -96,14 +96,14 @@ function reserved() {
 <body onload="init();">
 
 <form name="reserved_song" method="post">
-<table width="400">
+<table width="370">
 	<tr>
 		<td width="10"></td>
 		<td>
-			<table width="400" border="1">
+			<table width="370" border="1">
 				<tr>
-					<td align="center" width="100">예약 시작일</td>
-					<td align="center">
+					<td align="left" width="100">시작일</td>
+					<td align="left">
 						<select id="sYear" onChange="setCheckIn();"><option value="" selected>선택</option></select>&nbsp;
 						<select id="sMonth" onChange="setCheckIn();"><option value="" selected>선택</option></select>&nbsp;
 						<select id="sDay" onChange="setCheckIn();"><option value="" selected>선택</option></select>
@@ -111,8 +111,8 @@ function reserved() {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" width="100">예약 종료일</td>
-					<td align="center">
+					<td align="left" width="100">종료일</td>
+					<td align="left">
 						<select id="eYear" onChange="setCheckOut();"><option value="" selected>선택</option></select>&nbsp;
 						<select id="eMonth" onChange="setCheckOut();"><option value="" selected>선택</option></select>&nbsp;
 						<select id="eDay" onChange="setCheckOut();"><option value="" selected>선택</option></select>
@@ -120,16 +120,16 @@ function reserved() {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" width="100">구역안내</td>
-					<td align="center">
+					<td align="left" width="100">구역안내</td>
+					<td align="left">
 						<select name="room_area_no">
 							<option value="1" selected>통나무집</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" width="100">숙박일수</td>
-					<td align="center">
+					<td align="left" width="100">숙박일수</td>
+					<td align="left">
 						<select name="stay_cnt">
 							<option value="1" selected>1박</option>
 							<option value="2">2박</option>
@@ -138,8 +138,8 @@ function reserved() {
 					</td>
 				</tr>
 				<tr>
-					<td align="center" width="100">사이트</td>
-					<td align="center">
+					<td align="left" width="100">사이트</td>
+					<td align="left">
 						<select name="roomNoArr">
 							<option value="1" selected>통나무-01</option>
 							<option value="2">통나무-02</option>
