@@ -14,18 +14,6 @@
 <script type="text/javascript">
 function init() {
 	var nYear = new Date().getFullYear();
-	var initOption;
-
-	initOption = document.createElement('option');
-	initOption.innerText = "선택";
-	initOption.value = "";
-	
-	document.getElementById("sYear").appendChild(initOption);
-	document.getElementById("eYear").appendChild(initOption);
-	document.getElementById("sMonth").appendChild(initOption);
-	document.getElementById("eMonth").appendChild(initOption);
-	document.getElementById("sDay").appendChild(initOption);
-	document.getElementById("eDay").appendChild(initOption);
 	
 	for(var i = nYear; i <= (nYear+1); i++) {
 		var sOption = document.createElement('option');
@@ -102,46 +90,56 @@ function reserved() {
 			<table width="500" border="1">
 				<tr>
 					<td align="center" width="100">예약 시작일</td>
-					<td align="center" width="100">예약 종료일</td>
-					<td align="center" width="100">구역안내</td>
-					<td align="center" width="100">숙박일수</td>
-					<td align="center" width="100">사이트</td>
+					<td align="center">
+						<select id="sYear" onChange="setCheckIn();"><option value="" selected>선택</option></select>&nbsp;
+						<select id="sMonth" onChange="setCheckIn();"><option value="" selected>선택</option></select>&nbsp;
+						<select id="sDay" onChange="setCheckIn();"><option value="" selected>선택</option></select>
+						<input type="text" name="check_in" value="" />
+					</td>
 				</tr>
 				<tr>
+					<td align="center" width="100">예약 종료일</td>
 					<td align="center">
-				            <select id="sYear" onChange="setCheckIn();"></select>&nbsp;<select id="sMonth" onChange="setCheckIn();"></select>&nbsp;<select id="sDay" onChange="setCheckIn();"></select>
-				            <input type="hidden" name="check_in" value="" />
-				          </td>
+						<select id="eYear" onChange="setCheckOut();"><option value="" selected>선택</option></select>&nbsp;
+						<select id="eMonth" onChange="setCheckOut();"><option value="" selected>선택</option></select>&nbsp;
+						<select id="eDay" onChange="setCheckOut();"><option value="" selected>선택</option></select>
+						<input type="text" name="check_out" value="" />
+					</td>
+				</tr>
+				<tr>
+					<td align="center" width="100">구역안내</td>
 					<td align="center">
-				            <select id="eYear" onChange="setCheckOut();"></select>&nbsp;<select id="eMonth" onChange="setCheckOut();"></select>&nbsp;<select id="eDay" onChange="setCheckOut();"></select>
-				            <input type="hidden" name="check_out" value="" />
-				          </td>
-          <td align="center">
-            <select name="room_area_no">
-              <option value="2" selected>통나무집</option>
-            </select>
-          </td>
-          <td align="center">
-            <select name="stay_cnt">
-              <option value="1" selected>1박</option>
-              <option value="2">2박</option>
-              <option value="3">3박</option>
-            </select>
-          </td>
-          <td align="center">
-            <select name="roomNoArr">
-              <option value="1" selected>통나무-01</option>
-              <option value="2">통나무-02</option>
-              <option value="4">통나무-03</option>
-              <option value="5">통나무-04</option>
-              <option value="6">통나무-05</option>
-              <option value="7">통나무-06</option>
-              <option value="8">통나무-07</option>
-              <option value="9">통나무-08</option>
-              <option value="10">통나무-09</option>
-              <option value="369">통나무-10</option>
-            </select>
-          </td>
+						<select name="room_area_no">
+							<option value="2" selected>통나무집</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" width="100">숙박일수</td>
+					<td align="center">
+						<select name="stay_cnt">
+							<option value="1" selected>1박</option>
+							<option value="2">2박</option>
+							<option value="3">3박</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" width="100">사이트</td>
+					<td align="center">
+						<select name="roomNoArr">
+							<option value="1" selected>통나무-01</option>
+							<option value="2">통나무-02</option>
+							<option value="4">통나무-03</option>
+							<option value="5">통나무-04</option>
+							<option value="6">통나무-05</option>
+							<option value="7">통나무-06</option>
+							<option value="8">통나무-07</option>
+							<option value="9">통나무-08</option>
+							<option value="10">통나무-09</option>
+							<option value="369">통나무-10</option>
+						</select>
+					</td>
 				</tr>
 			</table>
 		</td>
