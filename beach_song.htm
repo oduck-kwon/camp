@@ -13,16 +13,29 @@
 
 <script type="text/javascript">
 function init() {
-  var nYear = new Date().getFullYear();
+	var nYear = new Date().getFullYear();
+	var initOption;
 
+	initOption = document.createElement('option');
+	initOption.innerText = "선택";
+	initOption.value = "";
+	
+	document.getElementById("sYear").appendChild(initOption);
+	document.getElementById("eYear").appendChild(initOption);
+	document.getElementById("sMonth").appendChild(initOption);
+	document.getElementById("eMonth").appendChild(initOption);
+	document.getElementById("sDay").appendChild(initOption);
+	document.getElementById("eDay").appendChild(initOption);
+	
 	for(var i = nYear; i <= (nYear+1); i++) {
 		var sOption = document.createElement('option');
 		sOption.innerText = i +"년";
 		sOption.value = i;
+		
 		var eOption = document.createElement('option');
 		eOption.innerText = i +"년";
 		eOption.value = i;
-
+	
 		document.getElementById("sYear").appendChild(sOption);
 		document.getElementById("eYear").appendChild(eOption);
 	}
@@ -31,10 +44,11 @@ function init() {
 		var sOption = document.createElement('option');
 		sOption.innerText = right("0"+i, 2) + "월";
 		sOption.value = right("0"+i, 2);
+		
 		var eOption = document.createElement('option');
 		eOption.innerText = right("0"+i, 2) + "월";
 		eOption.value = right("0"+i, 2);
-
+	
 		document.getElementById("sMonth").appendChild(sOption);
 		document.getElementById("eMonth").appendChild(eOption);
 	}
@@ -43,33 +57,34 @@ function init() {
 		var sOption = document.createElement('option');
 		sOption.innerText = right("0"+i, 2) +"일";
 		sOption.value = right("0"+i, 2);
+		
 		var eOption = document.createElement('option');
 		eOption.innerText = right("0"+i, 2) +"일";
 		eOption.value = right("0"+i, 2);
-
+	
 		document.getElementById("sDay").appendChild(sOption);
 		document.getElementById("eDay").appendChild(eOption);
 	}
 }
 
-function chgRoomArea() {
-
-}
-
-function setRoomNo() {
-
-}
-function reserved() {
-  var reservedForm = document.reserved_song;
-
+function setCheckIn() {
 	var sYYYY = document.getElementById("sYear").options[document.getElementById("sYear").selectedIndex].value;
 	var sMM = document.getElementById("sMonth").options[document.getElementById("sMonth").selectedIndex].value;
 	var sDD = document.getElementById("sDay").options[document.getElementById("sDay").selectedIndex].value;
 
+	document.reserved_song.check_in.value = sYYYY +""+ sMM +""+ sDD;
+}
+
+function setCheckOut() {
 	var eYYYY = document.getElementById("eYear").options[document.getElementById("eYear").selectedIndex].value;
 	var eMM = document.getElementById("eMonth").options[document.getElementById("eMonth").selectedIndex].value;
 	var eDD = document.getElementById("eDay").options[document.getElementById("eDay").selectedIndex].value;
 
+	document.reserved_song.check_out.value = eYYYY +""+ eMM +""+ eDD;
+}
+	
+function reserved() {
+  var reservedForm = document.reserved_song;
   
   reservedForm.action = "https://gwgs.pubcamping.kr/@song/reservation";
   reservedForm.submit();
@@ -88,19 +103,19 @@ function reserved() {
 				<tr>
 					<td align="center" width="100">예약 시작일</td>
 					<td align="center" width="100">예약 종료일</td>
-          <td align="center" width="100">구역안내</td>
-          <td align="center" width="100">숙박일수</td>
-          <td align="center" width="100">사이트</td>
+					<td align="center" width="100">구역안내</td>
+					<td align="center" width="100">숙박일수</td>
+					<td align="center" width="100">사이트</td>
 				</tr>
 				<tr>
 					<td align="center">
-            <select id="sYear"></select>&nbsp;<select id="sMonth"></select>&nbsp;<select id="sDay"></select>
-            <input type="hidden" name="check_in" value="" />
-          </td>
+				            <select id="sYear" onChange="setCheckIn();"></select>&nbsp;<select id="sMonth" onChange="setCheckIn();"></select>&nbsp;<select id="sDay" onChange="setCheckIn();"></select>
+				            <input type="hidden" name="check_in" value="" />
+				          </td>
 					<td align="center">
-            <select id="eYear"></select>&nbsp;<select id="eMonth"></select>&nbsp;<select id="eDay"></select>
-            <input type="hidden" name="check_out" value="" />
-          </td>
+				            <select id="eYear" onChange="setCheckOut();"></select>&nbsp;<select id="eMonth" onChange="setCheckOut();"></select>&nbsp;<select id="eDay" onChange="setCheckOut();"></select>
+				            <input type="hidden" name="check_out" value="" />
+				          </td>
           <td align="center">
             <select name="room_area_no">
               <option value="2" selected>통나무집</option>
