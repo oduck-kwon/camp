@@ -97,7 +97,11 @@ function setCheckOut() {
 }
 	
 function reserved() {
+  const randomWindowName = 'popup_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
   var reservedForm = document.reserved_song;
+  window.open("about:blank", randomWindowName);
+  reservedForm.target = randomWindowName;
+	
   reservedForm.submit();
 }
 
