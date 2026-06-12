@@ -99,7 +99,7 @@ function setCheckOut() {
 function reserved() {
   const randomWindowName = 'popup_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
   var reservedForm = document.reserved_song;
-  window.open("about:blank", randomWindowName);
+  window.open("about:blank", randomWindowName, "width=800, height=600, scrollbar=yes, left=0, top=0");
   reservedForm.target = randomWindowName;
 	
   reservedForm.submit();
@@ -129,7 +129,7 @@ function runAction() {
   
 <body onload="init();">
 <button type="button" onclick="window.open('https://gwgs.pubcamping.kr/@song/index');">로그인하고오기(새창)</button>
-<form name="reserved_song" action="https://gwgs.pubcamping.kr/@song/reservation" method="post" target="_blank">
+<form name="reserved_song" action="https://gwgs.pubcamping.kr/@song/reservation" method="post">
 <table width="370">
 	<tr>
 		<td width="10"></td>
