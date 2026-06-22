@@ -1,7 +1,7 @@
 <!doctype html>
 <HTML lang=en>
 <HEAD>
-<TITLE> 송지호 가자 </TITLE>
+<TITLE> 고성 캠핑 가자 </TITLE>
 <META charset="utf-8">
 <META NAME="Generator" CONTENT="EditPlus">
 <META NAME="Author" CONTENT="">
@@ -12,6 +12,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <script>
+//사이트 셋팅
+const obj_song_room = {1:'통나무집'}
+const obj_bong_room = {27:'카라반6인특실', 9:'카라반4인특실', 10:'카라반4인'}
+
+const obj_room_no1 = {1:'통나무-01',2:'통나무-02',4:'통나무-03',5:'통나무-04',6:'통나무-05',7:'통나무-06',8:'통나무-07',9:'통나무-08',10:'통나무-09',369:'통나무-10'}
+const obj_room_no27 = {477:'카라반(특)6-1', 478:'카라반(특)6-2', 485:'카라반(특)6-3', 486:'카라반(특)6-4', 487:'카라반(특)6-5', 492:'카라반(특)6-6'}
+const obj_room_no9 = {129:'카라반(특)4-2', 388:'카라반(특)4-3'}
+const obj_room_no10 = {130:'카라반4인-4', 392:'카라반4인-5'}
+
+
 function left(s,c){
   return s.substr(0,c);
 }//left("abcd",2)
@@ -37,68 +47,157 @@ setInterval(
 
 function init() {
 	updateTime();
-
-	var nYear = new Date().getFullYear();
+	var today = new Date();
+	var tYYYY = today.getFullYear();
+	var tMM = right("0" + (today.getMonth() + 1), 2);
+  var tDD = right("0" + today.getDate(), 2);
 	
-	for(var i = nYear; i <= (nYear+1); i++) {
+	for(var i = tYYYY; i <= (tYYYY+1); i++) {
 		var sOption = document.createElement('option');
 		sOption.innerText = i +"년";
 		sOption.value = i;
-		
-		var eOption = document.createElement('option');
-		eOption.innerText = i +"년";
-		eOption.value = i;
 	
 		document.getElementById("sYear").appendChild(sOption);
-		document.getElementById("eYear").appendChild(eOption);
 	}
 	//월 추가
 	for(var i = 1; i <= 12; i++) {
 		var sOption = document.createElement('option');
 		sOption.innerText = right("0"+i, 2) + "월";
 		sOption.value = right("0"+i, 2);
-		
-		var eOption = document.createElement('option');
-		eOption.innerText = right("0"+i, 2) + "월";
-		eOption.value = right("0"+i, 2);
 	
 		document.getElementById("sMonth").appendChild(sOption);
-		document.getElementById("eMonth").appendChild(eOption);
 	}
 	//일 추가
 	for(var i = 1; i <= 31; i++) {
 		var sOption = document.createElement('option');
 		sOption.innerText = right("0"+i, 2) +"일";
 		sOption.value = right("0"+i, 2);
-		
-		var eOption = document.createElement('option');
-		eOption.innerText = right("0"+i, 2) +"일";
-		eOption.value = right("0"+i, 2);
-	
+			
 		document.getElementById("sDay").appendChild(sOption);
-		document.getElementById("eDay").appendChild(eOption);
 	}
+
+	document.getElementById("sYear").value = tYYYY;
+	document.getElementById("sMonth").value = tMM;
+	document.getElementById("sDay").value = tDD;
+	
+	setCampZone();
+	setSelect();
 }
 
-function setCheckIn() {
+function setCampZone() {
+	var campZone = document.getElementById("camp_zone").options[document.getElementById("camp_zone").selectedIndex].value;
+	var cForm = document.gosung_reserved;
+
+	cForm.action = `https://gwgs.pubcamping.kr/${campZone}/reservation`;
+
+	resetStay(campZone);
+	resetRoom(campZone);
+	resetRoomNo();
+}
+
+function resetStay(campZone) {
+	var stay = 1;
+
+	if ( campZone == "@song") {
+		stay = 3;
+	}else if ( campZone == "@bongsucamp") {
+		stay = 7;
+	}else{}
+
+	//숙박 초기화(전체삭제)
+	document.getElementById("select_stay").options.length = 0;
+
+	//숙박 리셋
+	for(var i = 1; i <= stay; i++) {
+		var sOption = document.createElement('option');
+		sOption.innerText = i +"박";
+		sOption.value = i;
+			
+		document.getElementById("select_stay").appendChild(sOption);
+	}
+	document.getElementById("select_stay").selectedIndex = 0;
+}
+
+function resetRoom(campZone) {
+	let obj;
+
+	if ( campZone == "@song") {
+		obj = obj_song_room;
+	}else if ( campZone == "@bongsucamp") {
+		obj = obj_bong_room;
+	}else{}
+
+	//구역 초기화(전체삭제)
+	document.getElementById("select_room").options.length = 0;
+
+	const entires = Object.entries(obj);
+
+	for( var i=0; i < entires.length; i++) {
+				var sOption = document.createElement('option');
+				sOption.value = entires[i][0];
+				sOption.innerText = entires[i][1];
+			
+		document.getElementById("select_room").appendChild(sOption);
+	}
+	document.getElementById("select_room").selectedIndex = 0;
+}
+
+function resetRoomNo() {
+	const room = document.getElementById("select_room").options[document.getElementById("select_room").selectedIndex].value;
+
+	let obj;
+
+	if ( room == "1") {
+		obj = obj_room_no1;
+	}else if ( room == "9") {
+		obj = obj_room_no9;
+	}else if ( room == "10") {
+		obj = obj_room_no10;
+	}else if ( room == "27") {
+		obj = obj_room_no27;
+	}else{}
+
+	//사이트 초기화(전체삭제)
+	document.getElementById("select_room_no").options.length = 0;
+
+	const entires = Object.entries(obj);
+
+	for( var i=0; i < entires.length; i++) {
+				var sOption = document.createElement('option');
+				sOption.value = entires[i][0];
+				sOption.innerText = entires[i][1];
+			
+		document.getElementById("select_room_no").appendChild(sOption);
+	}
+	document.getElementById("select_room_no").selectedIndex = 0;
+}
+
+function setSelect() {
+	var room_area_no = document.getElementById("select_room").options[document.getElementById("select_room").selectedIndex].value;
+	var stay_cnt = document.getElementById("select_stay").options[document.getElementById("select_stay").selectedIndex].value;
+	var roomNoArr = document.getElementById("select_room_no").options[document.getElementById("select_room_no").selectedIndex].value;
+
 	var sYYYY = document.getElementById("sYear").options[document.getElementById("sYear").selectedIndex].value;
 	var sMM = document.getElementById("sMonth").options[document.getElementById("sMonth").selectedIndex].value;
 	var sDD = document.getElementById("sDay").options[document.getElementById("sDay").selectedIndex].value;
 
-	document.reserved_song.check_in.value = sYYYY +""+ sMM +""+ sDD;
+  var checkInDate = new Date(parseInt(sYYYY,10), parseInt(sMM,10)-1, parseInt(sDD,10));
+	checkInDate.setDate(checkInDate.getDate() + parseInt(stay_cnt));
+
+  var eYYYY = checkInDate.getFullYear();
+  var eMM = right("0" + (checkInDate.getMonth() + 1), 2);
+  var eDD = right("0" + checkInDate.getDate(), 2);
+
+	document.gosung_reserved.check_in.value = sYYYY +""+ sMM +""+ sDD;
+	document.gosung_reserved.check_out.value = eYYYY +""+ eMM +""+ eDD;
+	document.gosung_reserved.room_area_no.value = room_area_no;
+	document.gosung_reserved.stay_cnt.value = stay_cnt;
+	document.gosung_reserved.roomNoArr.value = roomNoArr;
 }
 
-function setCheckOut() {
-	var eYYYY = document.getElementById("eYear").options[document.getElementById("eYear").selectedIndex].value;
-	var eMM = document.getElementById("eMonth").options[document.getElementById("eMonth").selectedIndex].value;
-	var eDD = document.getElementById("eDay").options[document.getElementById("eDay").selectedIndex].value;
-
-	document.reserved_song.check_out.value = eYYYY +""+ eMM +""+ eDD;
-}
-	
 function reserved() {
   const randomWindowName = 'popup_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
-  var reservedForm = document.reserved_song;
+  var reservedForm = document.gosung_reserved;
   window.open("", randomWindowName, "width=1000, height=1000, scrollbar=yes, left=50, top=0");
   reservedForm.target = randomWindowName;
 	
@@ -128,63 +227,52 @@ function runAction() {
 </head>
   
 <body onload="init();">
-<button type="button" onclick="window.open('https://gwgs.pubcamping.kr/@song/index');">로그인하고오기(새창)</button>
-<form name="reserved_song" action="https://gwgs.pubcamping.kr/@song/reservation" method="post">
+<button type="button" onclick="window.open('https://gwgs.pubcamping.kr/Home/index');">로그인하고오기(새창)</button>
 <table width="370">
 	<tr>
 		<td width="10"></td>
 		<td>
 			<table width="370" border="1">
 				<tr>
-					<td align="left" width="100">시작일</td>
+					<td align="left" width="100">캠핑장 선택</td>
 					<td align="left">
-						<select id="sYear" onChange="setCheckIn();"><option value="" selected>선택</option></select>&nbsp;
-						<select id="sMonth" onChange="setCheckIn();"><option value="" selected>선택</option></select>&nbsp;
-						<select id="sDay" onChange="setCheckIn();"><option value="" selected>선택</option></select>
-						<input type="hidden" name="check_in" value="" />
+						<select id="camp_zone" onchange="setCampZone();setSelect();">
+							<option value="@song" selected>송지호</option>
+							<option value="@bongsucamp" >봉수대</option>
+						</select>&nbsp;
 					</td>
 				</tr>
 				<tr>
-					<td align="left" width="100">종료일</td>
+					<td align="left" width="100">시작일</td>
 					<td align="left">
-						<select id="eYear" onChange="setCheckOut();"><option value="" selected>선택</option></select>&nbsp;
-						<select id="eMonth" onChange="setCheckOut();"><option value="" selected>선택</option></select>&nbsp;
-						<select id="eDay" onChange="setCheckOut();"><option value="" selected>선택</option></select>
-						<input type="hidden" name="check_out" value="" />
+						<select id="sYear" onChange="setSelect();"></select>&nbsp;
+						<select id="sMonth" onChange="setSelect();"></select>&nbsp;
+						<select id="sDay" onChange="setSelect();"></select>
+
 					</td>
 				</tr>
+
 				<tr>
 					<td align="left" width="100">구역안내</td>
 					<td align="left">
-						<select name="room_area_no">
-							<option value="1" selected>통나무집</option>
+						<select id="select_room" onchange="resetRoomNo();setSelect();">
+						
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td align="left" width="100">숙박일수</td>
 					<td align="left">
-						<select name="stay_cnt">
-							<option value="1" selected>1박</option>
-							<option value="2">2박</option>
-							<option value="3">3박</option>
+						<select id="select_stay" onchange="setSelect();">
+
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td align="left" width="100">사이트</td>
 					<td align="left">
-						<select name="roomNoArr">
-							<option value="1" selected>통나무-01</option>
-							<option value="2">통나무-02</option>
-							<option value="4">통나무-03</option>
-							<option value="5">통나무-04</option>
-							<option value="6">통나무-05</option>
-							<option value="7">통나무-06</option>
-							<option value="8">통나무-07</option>
-							<option value="9">통나무-08</option>
-							<option value="10">통나무-09</option>
-							<option value="369">통나무-10</option>
+						<select id="select_room_no" onchange="setSelect();">
+
 						</select>
 					</td>
 				</tr>
@@ -195,7 +283,16 @@ function runAction() {
 		</td>
 	</tr>
 </table>
+<form id="gosung_reserved" name="gosung_reserved" method="post">
+	<input type="hidden" name="check_in" value="" />
+	<input type="hidden" name="check_out" value="" />
+	<input type="hidden" name="room_area_no" value="" />
+	<input type="hidden" name="stay_cnt" value="" />
+	<input type="hidden" name="roomNoArr" value="" />
+
 </form>
-<input type="button" value="RUN_ACTION" onClick="runAction();" />
+</form>
+<input type="button" value="호출(연타20회)" onClick="runAction();" />
+<input type="button" value="호출(1회)" onClick="reserved();" />
 </body>
 </html>
